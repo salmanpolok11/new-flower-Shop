@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Periwinkle",
+    "image": "https://i.ibb.co/rfDFwHZ/Rectangle-67.png",
+     "price" : "$10"
+},
+
+{
+    "id": 2,
+    "name": "Daisy",
+    "image": "https://i.ibb.co/XWHW6Hk/Rectangle-65.png",
+    "price" : "$15"
+},
+
+{
+    "id": 3,
+    "name": "Sun flower",
+    "image": "https://i.ibb.co/9ZSMY7T/Rectangle-63.png",
+    "price" : "$19"
+},
+
+{
+    "id": 4,
+    "name": "White Rose",
+    "image": "https://i.ibb.co/bRqjcTt/Rectangle-58.png",
+    "price" : "$30"
+}
+]
