@@ -1,22 +1,37 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import img from "../assets/Rectangle 25.png";
 import img1 from "../assets/Rectangle 26.png";
 import img2 from "../assets/Rectangle 3.png";
 import img3 from "../assets/Rectangle 4.png";
 import img4 from "../assets/Rectangle 5.png";
 import img5 from "../assets/Rectangle 7.png";
+import img6 from "../assets/30234.png";
+
 import Card from "../Components/Card";
+import Marquee from "react-fast-marquee";
+import { AuthContex } from "../Provider/AuthProvider";
 
 const Home = () => {
   const [flower, setFlower] = useState([]);
   useEffect(() => {
-    fetch("/public/Hflower.json")
+    fetch("/flower.json")
       .then((res) => res.json())
       .then((data) => setFlower(data));
   }, []);
 
+  const {user} = useContext(AuthContex)
+
   return (
-    <div className="   text-black md:mt-16   ">
+  <div className=" md:h-[2672px]	 bg-[#F2F2F2]  text-black    ">
+  <Marquee className=" text-2xl text-red-600" speed='120'>
+ {
+    user &&
+     <div className=" flex items-center gap-4">
+          <img className="mt-2 w-12 rounded-full" src={ user.photoURL  ?   user.photoURL : img6    } alt="" />
+         <h1>{user.displayName}</h1>
+     </div>
+ }
+</Marquee>
       <section className=" md:flex justify-center items-center p-4">
         <div className=" space-y-4">
           <h1 className=" md:w-[557px] text-6xl ">
@@ -38,26 +53,29 @@ const Home = () => {
           <img className="shadow-lg rounded-lg" src={img5} alt="" />
         </div>
       </section>
+ 
+     
 
       <section>
-        <div className=" h-full" >
-          <h1 className=" text-5xl font-semibold text-center md:mt-20 mb-5">Best selers</h1>
-          <div className=" md:flex justify-center">
-            {flower.map((flow) => (
-              <Card key={flower.id} flow={flow}></Card>
-            ))}
+        <div className=" h-full">
+          <h1 className=" text-5xl font-semibold text-center md:mt-20 mb-5">
+            Best selers
+          </h1>
+          <div className=" md:max-w-[1200px] mx-auto grid md:grid-cols-4">
+              { 
+                 flower.map( flowers => <Card key={flowers.id}  flowers={flowers}> </Card>)
+               }
           </div>
         </div>
       </section>
 
       <section>
-             <div>
-                     <div className=" text-center text-6xl">
-                        <h1>Hellow </h1>
-                     </div>
-             </div>
+        <div>
+          <div className=" text-center text-6xl">
+            <h1>Hellow </h1>
+          </div>
+        </div>
       </section>
-
     </div>
   );
 };

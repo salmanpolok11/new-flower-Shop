@@ -1,7 +1,21 @@
 import { Link, NavLink } from "react-router-dom";
-import { BsFillPersonFill , BsCartCheckFill } from  "react-icons/bs";
+import { BsFillPersonFill, BsCartCheckFill } from "react-icons/bs";
+import { useContext } from "react";
+import { AuthContex } from "../Provider/AuthProvider";
+import auth from "../Firebase/firebase.init";
+import swal from "sweetalert";
+import img6 from "../assets/30234.png";
 
 const Header = () => {
+const { user, logOut } = useContext(AuthContex);
+
+  const handleLogOut = () => {
+    logOut(auth)
+    .then((res) =>
+    swal("Thank you!", "Your LogOut Successfull", "success")
+    );
+  };
+
   const navLinks = (
     <>
       <li>
@@ -16,6 +30,17 @@ const Header = () => {
       <li>
         <NavLink to="/about"> About </NavLink>
       </li>
+
+
+  {
+      user ? 
+      <li>
+      <NavLink to="/profile">Profile </NavLink>
+    </li> : 
+    <li>
+    <NavLink to="/login"> Login </NavLink>
+  </li>
+  }
     </>
   );
 
@@ -55,8 +80,29 @@ const Header = () => {
         <ul className="menu menu-horizontal px-1">{navLinks}</ul>
       </div>
       <div className="navbar-end text-[#FF8F52] space-x-2 text-2xl px-3">
-         <Link><BsFillPersonFill/></Link>
-         <Link><BsCartCheckFill/></Link>
+        {user ? (
+          <>
+           
+            <img
+              className="mt-2 w-12 rounded-full"
+              src= { user.photoURL  ?   user.photoURL : img6    }
+              alt=""
+            />
+
+            <button onClick={handleLogOut} className=" btn btn-sm">
+              LogOut
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login">
+              <BsFillPersonFill />
+            </Link>
+            <Link>
+              <BsCartCheckFill />
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );
